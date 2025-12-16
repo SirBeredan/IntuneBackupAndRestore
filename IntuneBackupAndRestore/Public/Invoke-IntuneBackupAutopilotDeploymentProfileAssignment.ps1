@@ -24,7 +24,7 @@ function Invoke-IntuneBackupAutopilotDeploymentProfileAssignment {
     )
 
     # Get all assignments from all policies
-    $winAutopilotDeploymentProfiles = Invoke-MgGraphRequest -Uri "/beta/deviceManagement/windowsAutopilotDeploymentProfiles" | Get-MGGraphAllPages
+    $winAutopilotDeploymentProfiles = Invoke-MgGraphRequest -Uri "$apiversion/deviceManagement/windowsAutopilotDeploymentProfiles" | Get-MGGraphAllPages
 
 	if ($winAutopilotDeploymentProfiles.value -ne "") {
 
@@ -34,7 +34,7 @@ function Invoke-IntuneBackupAutopilotDeploymentProfileAssignment {
 		}
 	
 		foreach ($winAutopilotDeploymentProfile in $winAutopilotDeploymentProfiles) {
-			$assignments = Invoke-MgGraphRequest -Uri "/beta/deviceManagement/windowsAutopilotDeploymentProfiles/$($winAutopilotDeploymentProfile.id)/assignments" | Get-MGGraphAllPages
+			$assignments = Invoke-MgGraphRequest -Uri "$apiversion/deviceManagement/windowsAutopilotDeploymentProfiles/$($winAutopilotDeploymentProfile.id)/assignments" | Get-MGGraphAllPages
 			
 			if ($assignments) {
 				$fileName = ($winAutopilotDeploymentProfile.displayName).Split([IO.Path]::GetInvalidFileNameChars()) -join '_'
